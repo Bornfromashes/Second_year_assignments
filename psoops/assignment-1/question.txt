@@ -1,0 +1,7 @@
+Create a class named weather report that holds a daily weather report with data members day_of_month, high_temp,
+low_temp, amount_rain, amount_snow. The construction initializes the feilds with default values: 99 for day_of_
+month, 999 for high_temp,-999 for low_temp and 0 for amount_snow and amount_rain.
+Include a function that prompts the user and sets values for each field so that you can override the default 
+values. write a c++ program that creates a monthly report.
+a)Menu driven program with option to enter data and display report.
+b)Report Format.
