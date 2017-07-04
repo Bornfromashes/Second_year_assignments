@@ -4,6 +4,7 @@ using namespace std;
 class Weather
 {
     int day, htemp, ltemp, amt_rain, amt_snow;
+    static int htemp1, ltemp1, amt_rain1, amt_snow1;
 public:
     Weather()
     {
@@ -13,37 +14,56 @@ public:
         amt_rain= 6;
         amt_snow= 2;
     }
-    void getdata();
+    void getdata(int);
     void disp();
     void del();
+static void avg(int);
+    void getday()
+    {
+        cin>>day;
+    }
     int dm()
     {
         return day;
     }
-    int ht()
-    {
-        return htemp;
-    }
-    int lt()
-    {
-        return ltemp;
-    }
-    int rain()
-    {
-        return amt_rain;
-    }
-    int snow()
-    {
-        return amt_snow;
-    }
-
 };
+int Weather::htemp1;
+int Weather::ltemp1;
+int Weather::amt_snow1;
+int Weather::amt_rain1;
 
-void Weather::getdata()
+void Weather::getdata(int q)
 {
 
+ //   int dl;
     cout<<"\n Enter day, high temp, low temp, amount of rain, amount of snow\t";
-    cin>>day>>htemp>>ltemp>>amt_rain>>amt_snow;
+  /*  cin>>dl;
+    for(int i=0;i<n;i++)
+    {
+        for (int j=n;j>0;n--)
+        {
+            if(w[j].dm==w[i].day)
+            {
+                cout<<"Error Data already present";
+                int flag=0;
+            }
+        }
+        if(flag==0)
+        {
+            break;
+        }
+         else
+         {
+
+            cin>>htemp>>ltemp>>amt_rain>>amt_snow;
+         }
+    }
+    */
+    cin>>htemp>>ltemp>>amt_rain>>amt_snow;
+    htemp1=htemp1+htemp;
+    ltemp1=ltemp1+ltemp;
+    amt_rain1=amt_rain1+amt_rain;
+    amt_snow1=amt_snow1+amt_snow;
 }
 
 void Weather::disp()
@@ -53,19 +73,27 @@ void Weather::disp()
 
 void Weather::del()
 {
-    day= 31;
-    htemp= 32;
-    ltemp= 20;
-    amt_rain= 6;
-    amt_snow= 2;
+    day= 0;
+    htemp= 0;
+    ltemp= 0;
+    amt_rain= 0;
+    amt_snow= 0;
 
+}
+void Weather::avg(int n)
+{
+    cout<<"\nAverage high temp is\t "<<htemp1/n<<"\nAverage low temp is\t"<<ltemp1/n;
+    cout<<"\nAverage rain is\t "<<amt_rain1/n<<"\nAverage snow is\t "<<amt_snow1/n;
 }
 
 
 int main()
 {
-    int n,d,c,r;
+    int d,c,r,j=0,q=0;
+    static int n;
+    int flag, flag1, flag2;
     Weather w[31];
+    Weather c;
     do{
         cout<<"\n Enter the choice 1:Enter data\n 2:Display all data \n 3:Display specific data\n 4:Delete specific day data\n 5:Modify data\n 6:Monthly Report\t";
         cin>>c;
@@ -73,9 +101,20 @@ int main()
         {
             case 1: cout<<"\n Enter no. of days of which u want to enter data\t";
                     cin>>n;
+                    cout<<"\nEnter day";
+                    cin>>c.getday();
                     for(int i=0; i<n; i++)
                     {
-                        w[i].getdata();
+                        if(c.dm==w[i].dm)
+                        {
+                           cout<<"\nError day data already present ";
+                        }
+                       else
+                       {
+                            q=c.dm();
+                            w[i].getdata(q);
+                       }
+
                     }
                     break;
             case 2: for(int i=0; i<n; i++)
@@ -90,7 +129,13 @@ int main()
                         if(w[i].dm()==d)
                         {
                             w[i].disp();
+                            flag2=0;
                         }
+
+                    }
+                    if(flag2!=0)
+                    {
+                        cout<<"\n Error 404 DAY DATA NOT FOUND!!!";
                     }
                     break;
             case 4:cout<<"\nEnter day to delete\t";
@@ -100,7 +145,13 @@ int main()
                         if(w[i].dm()==d)
                         {
                             w[i].del();
+                            flag1=0;
                         }
+
+                    }
+                    if(flag1!=0)
+                    {
+                        cout<<"\n Error 404 DAY DATA NOT FOUND!!!";
                     }
                     break;
             case 5:cout<<"\nEnter day to modify\t";
@@ -110,25 +161,17 @@ int main()
                         if(w[i].dm()==d)
                         {
                             w[i].getdata();
+                            flag=0;
                         }
+
+                    }
+                    if(flag!=0)
+                    {
+                        cout<<"\n Error 404 DAY DATA NOT FOUND!!!";
                     }
                     break;
             case 6: cout<<"\nReport of whole month\t";
-                    int avg_htemp=0, avg_ltemp=0, avg_rain=0, avg_snow=0;
-                    for (int i=0; i<n;i++)
-                    {
-                        avg_htemp+=w[i].ht();
-                        avg_ltemp+=w[i].lt();
-                        avg_rain+=w[i].rain();
-                        avg_snow+=w[i].snow();
-
-                    }
-                    avg_htemp=avg_htemp/n;
-                    avg_ltemp=avg_ltemp/n;
-                    avg_rain= avg_rain/n;
-                    avg_snow= avg_snow/n;
-                    cout<<"\nAverage high temp is\t "<<avg_htemp<<"\nAverage low temp is\t"<<avg_ltemp;
-                    cout<<"\nAverage rain is\t "<<avg_rain<<"\nAverage snow is\t "<<avg_snow;
+                    Weather::avg(n);
                     break;
         }
         cout<<"\nEnter 1 to continue\t";
