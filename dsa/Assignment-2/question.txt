@@ -1,0 +1,7 @@
+Matrix operation
+with pointer and without pointer
+make menu driven and check whether they are applicable for operations
+do transpose, central point(highest in column , lowest in row)
+
+
+

@@ -14,7 +14,7 @@ public:
         amt_rain= 6;
         amt_snow= 2;
     }
-    void getdata(int);
+    void getdata();
     void disp();
     void del();
 static void avg(int);
@@ -32,34 +32,12 @@ int Weather::ltemp1;
 int Weather::amt_snow1;
 int Weather::amt_rain1;
 
-void Weather::getdata(int q)
+void Weather::getdata()
 {
 
- //   int dl;
-    cout<<"\n Enter day, high temp, low temp, amount of rain, amount of snow\t";
-  /*  cin>>dl;
-    for(int i=0;i<n;i++)
-    {
-        for (int j=n;j>0;n--)
-        {
-            if(w[j].dm==w[i].day)
-            {
-                cout<<"Error Data already present";
-                int flag=0;
-            }
-        }
-        if(flag==0)
-        {
-            break;
-        }
-         else
-         {
 
-            cin>>htemp>>ltemp>>amt_rain>>amt_snow;
-         }
-    }
-    */
-    cin>>htemp>>ltemp>>amt_rain>>amt_snow;
+    cout<<"\n Enter day, high temp, low temp, amount of rain, amount of snow\t";
+    cin>>day>>htemp>>ltemp>>amt_rain>>amt_snow;
     htemp1=htemp1+htemp;
     ltemp1=ltemp1+ltemp;
     amt_rain1=amt_rain1+amt_rain;
@@ -93,7 +71,7 @@ int main()
     static int n;
     int flag, flag1, flag2;
     Weather w[31];
-    Weather c;
+
     do{
         cout<<"\n Enter the choice 1:Enter data\n 2:Display all data \n 3:Display specific data\n 4:Delete specific day data\n 5:Modify data\n 6:Monthly Report\t";
         cin>>c;
@@ -102,18 +80,9 @@ int main()
             case 1: cout<<"\n Enter no. of days of which u want to enter data\t";
                     cin>>n;
                     cout<<"\nEnter day";
-                    cin>>c.getday();
                     for(int i=0; i<n; i++)
                     {
-                        if(c.dm==w[i].dm)
-                        {
-                           cout<<"\nError day data already present ";
-                        }
-                       else
-                       {
-                            q=c.dm();
-                            w[i].getdata(q);
-                       }
+                        w[i].getdata();
 
                     }
                     break;
