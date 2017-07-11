@@ -14,7 +14,7 @@ public:
         amt_rain= 6;
         amt_snow= 2;
     }
-    void getdata();
+    void getdata(int x);
     void disp();
     void del();
 static void avg(int);
@@ -32,22 +32,21 @@ int Weather::ltemp1;
 int Weather::amt_snow1;
 int Weather::amt_rain1;
 
-void Weather::getdata()
+void Weather::getdata(int x)
 {
-
-
-    cout<<"\n Enter day, high temp, low temp, amount of rain, amount of snow\t";
-    cin>>day>>htemp>>ltemp>>amt_rain>>amt_snow;
+    day=x;
+    cout<<"\n Enter high temp, low temp, amount of rain, amount of snow\t";
+    cin>>htemp>>ltemp>>amt_rain>>amt_snow;
     htemp1=htemp1+htemp;
     ltemp1=ltemp1+ltemp;
     amt_rain1=amt_rain1+amt_rain;
     amt_snow1=amt_snow1+amt_snow;
 }
-
 void Weather::disp()
 {
-    cout<<"\n Day\t"<<day<<"\n high temp\t"<<htemp<<"\n low temp\t"<<ltemp<<"\n amount of rain\t"<<amt_rain<<"\n amount of snow\t"<<amt_snow;
-}
+
+    cout<<"\n"<<day<<"\t"<<htemp<<"\t\t"<<ltemp<<"\t\t"<<amt_rain<<"\t\t"<<amt_snow;
+ }
 
 void Weather::del()
 {
@@ -60,16 +59,17 @@ void Weather::del()
 }
 void Weather::avg(int n)
 {
-    cout<<"\nAverage high temp is\t "<<htemp1/n<<"\nAverage low temp is\t"<<ltemp1/n;
-    cout<<"\nAverage rain is\t "<<amt_rain1/n<<"\nAverage snow is\t "<<amt_snow1/n;
+    cout<<"\n Average high temp \t Average low temp \t Average rain \t Average snow";
+    cout<<"\n----------------------------------------------------------------------------------------";
+    cout<<"\n"<<htemp1/n<<"\t\t\t"<<ltemp1/n<<"\t\t\t"<<amt_rain1/n<<"\t\t\t"<<amt_snow1/n;
 }
 
 
 int main()
 {
-    int d,c,r,j=0,q=0;
+    int d,c,r,j=0,q=0,x;
     static int n;
-    int flag, flag1, flag2;
+    int flag, flag1, flag2, flag3;
     Weather w[31];
 
     do{
@@ -79,14 +79,32 @@ int main()
         {
             case 1: cout<<"\n Enter no. of days of which u want to enter data\t";
                     cin>>n;
-                    cout<<"\nEnter day";
                     for(int i=0; i<n; i++)
                     {
-                        w[i].getdata();
-
+                        flag3=1;
+                        cout<<"\nEnter day";
+                        cin>>x;
+                        for(int i=0; i<n; i++)
+                        {
+                            if(w[i].dm()==x)
+                            {
+                                flag3=0;
+                            }
+                        }
+                        if(flag3!=0)
+                        {
+                            w[i].getdata(x);
+                        }
+                        else
+                         {
+                             cout<<"\n Day data already present";
+                             i--;
+                         }
                     }
                     break;
-            case 2: for(int i=0; i<n; i++)
+            case 2:
+                    cout<<"\n Day  high temp  low temp  amount of rain   amount of snow\n --------------------------------------------------------------------------------------------";
+                    for(int i=0; i<n; i++)
                     {
                         w[i].disp();
                     }
@@ -97,6 +115,7 @@ int main()
                     {
                         if(w[i].dm()==d)
                         {
+                             cout<<"\n Day  high temp  low temp  amount of rain   amount of snow\n ------------------------------------------------------------------------------------";
                             w[i].disp();
                             flag2=0;
                         }
@@ -129,7 +148,7 @@ int main()
                     {
                         if(w[i].dm()==d)
                         {
-                            w[i].getdata();
+                            w[i].getdata(d);
                             flag=0;
                         }
 
