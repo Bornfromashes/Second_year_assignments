@@ -1,49 +1,30 @@
 #include<stdio.h>
 
-
 int main()
 {
-    int a[31],b[31];
-    int m, n;
-    int *i, *u;
-    printf("\nEnter size of two array ");
-    scanf("%d %d",&m,&n);
-    getdata(&a[0], &b[0], m, n);
-    sort(&a[0],m);
-    sort(&b[0],n);
-    display(&a[0], &b[0], m, n);
-    i=intersection(&a[0], &b[0], m, n);
-   // u=union(&a[0], &b[0], m, n);
-   /* if(m==n)
+    int c[5],i, m=5;
+    for(i=0;i<5;i++)
     {
-        sum(&a[0], &b[0], m);
-        sub(&a[0], &b[0], m);
-        multiply(&a[0], &b[0], m);
-
-    }*/
-}
-void getdata(int *p, int *q, int m, int n)
-{
-    int i,j;
+        scanf("%d",&c[i]);
+    }
+    sort(&c, 5);
+    m=r(&c, 5);
+    printf("\n{");
     for(i=0;i<m;i++)
     {
-        scanf("%d",p);
-        p++;
+        printf("%d",c[i]);
     }
-    for(i=0;i<n;i++)
-    {
-        scanf("%d",q);
-        q++;
-    }
+    printf("\n}");
+    return 0;
 }
 void sort(int *p, int m)
 {
-    int i, j, temp;
+    int i, j, temp,c[31],l=0;
     for(i=0;i<m;i++)
     {
         for(j=i;j<m;j++)
         {
-            if(*(p+i)>=*(p+j))
+            if(*(p+i)>*(p+j))
             {
                 temp= *(p+i);
                 *(p+i)=*(p+j);
@@ -52,100 +33,17 @@ void sort(int *p, int m)
         }
     }
 }
-void display(int *p, int *q, int m, int n)
+int r(int *p, int m)
 {
-    int i,j;
-    for(i=0;i<m;i++)
+    int k = 0,i;
+    for (i = 1; i < m; i++)
     {
-        printf("\n%d",*p);
-        p++;
+    if (*(p+k) != *(p+i)) {              //comparing the first 2 unequal numbers
+    *(p+k+1) = *(p+i);                 //shifting to the left if distinct
+    k++;
     }
-    for(i=0;i<n;i++)
-    {
-        printf("\n%d",*q);
-        q++;
     }
-}
-/*
-void sum(int *p, int *q, int m)
-{
-    int i;
-    for(i=0;i<m;i++)
-    {
-        *(p+i)=*(p+i)+*(q+i);
-    }
-    for(i=0;i<m;i++)
-    {
-        printf("\n");
-        printf("\n%d",*p);
-        p++;
-    }
-
-} */
-
-void sub(int *p, int *q, int m)
-{
-    int i;
-    for(i=0;i<m;i++)
-    {
-        *(p+i)=*(p+i)-*(q+i);
-    }
-    for(i=0;i<m;i++)
-    {
-        printf("\n");
-        printf("\n%d",*p);
-        p++;
-    }
-}
-/*void multiply(int *p, int *q, int m)
-{
-    int i;
-    for(i=0;i<m;i++)
-    {
-        *(p+i)=*(p+i)**(q+i);
-    }
-    for(i=0;i<m;i++)
-    {
-        printf("\n");
-        printf("\n%d",*p);
-        p++;
-    }
-}*/
-int* intersection(int *p, int *q, int m, int n)
-{
-    int i, j, k[31], o=0;;
-    for (i=0;i<m;i++)
-    {
-        for(j=0;j<n;j++)
-        {
-            if(*(p+i)==*(q+j))
-            {
-                k[o]=*(p+i);
-                o++;
-            }
-        }
-    }
-    for(i=0;i<o;i++)
-    {
-        printf("\n");
-        printf("\n %d",k[i]);
-    }
-    return &k[0];
+    return k+1;
 }
 
-/*int* union(int *p, int *q, int m, int n)
-{
-    int k[100];
-    for(i=0; i<m; i++)
-    {
-        k[i]=*(p+i);
-    }
-    for(i=m;i<(m+n);i++)
-    {
-        k[i]==*j;
-        j++;
-    }
-    return &k[0];
-}
-*/
 

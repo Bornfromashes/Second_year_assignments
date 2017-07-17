@@ -3,5 +3,11 @@ with pointer and without pointer
 make menu driven and check whether they are applicable for operations
 do transpose, central point(highest in column , lowest in row)
 
+exams 
+online 1- 4/9-9/9;
+online 2- october 9/10;
+offline - dec
+practical -november
+
 
 

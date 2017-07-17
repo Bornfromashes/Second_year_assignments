@@ -2,7 +2,8 @@
 
 int main()
 {
-    int a[31], b[31];
+    int a[31], b[31],x,z;
+    int *g, *h;
     int m,n;
     printf("\nEnter size of array 1 and array 2");
     scanf("%d%d",&m, &n);
@@ -10,12 +11,29 @@ int main()
     getdata(&b,n);
     sort(&a,m);
     sort(&b,n);
-    remove(&a, m);
-    remove(&b, n);
+    m=r(&a,m);
+    n=r(&b,n);
     display(&a,m);
     display(&b,n);
-   // union_(&a,&b,m,n);
-  //  intersection(&a, &b, m, n);
+    do
+    {
+        printf("\n Enter ur choice 1.union 2. intersection 3. difference 4. symmetric difference");
+        scanf("%d",&x);
+        switch(x)
+        {
+            case 1: uni(&a, &b, m, n);
+                    break;
+            case 2: intersection(&a, &b, m, n);
+                    break;
+            case 3: difference(&a, &b, m, n);
+                    break;
+            case 4: symmetric(&a, &b, m, n);
+                    break;
+        }
+        printf("\n Enter 1 to continue ");
+        scanf("%d", &z);
+    }while(z==1);
+
     return 0;
 }
 void getdata(int *p, int m)
@@ -27,7 +45,6 @@ void getdata(int *p, int m)
         p++;
     }
 }
-
 void sort(int *p, int m)
 {
     int i, j, temp,c[31],l=0;
@@ -43,42 +60,18 @@ void sort(int *p, int m)
             }
         }
     }
-    for(i=0;i<m-1;i++)
-    {
-        if(*(p+i)!=*(p+i+1))
-        {
-            c[l]=*(p+i);
-            l++;
-        }
-        else
-            i++;
-
-    }
-    c[l]=*(p+m);
-    m=l;
-    for(i=0;i<m;i++)
-    {
-        *(p+i)=c[i];
-    }
 }
-void remove(int *p, int m)
-{int i, j, k;
-for(i=0;i<m;i++)
+int r(int *p, int m)
+{
+    int k = 0,i;
+    for (i = 1; i < m; i++)
     {
-        for(j=i+1;j<m;)
-        {
-            if(*(p+i)=*(p+j))
-            {
-                for(k=j;k<m-1;++k)
-                {
-                    *(p+k)=*(p+k+1);
-                }
-                --m;
-            }
-            else
-                ++j;
-        }
+    if (*(p+k) != *(p+i)) {
+    *(p+k+1) = *(p+i);
+    k++;
     }
+    }
+    return k+1;
 }
 void display(int *p, int m)
 {
@@ -91,53 +84,114 @@ void display(int *p, int m)
     }
     printf("\n}");
 }
-void union_(int *p, int *q, int m, int n)
+void uni(int *p, int *q, int m, int n)
 {
-    int i,j, c[m+n];
-    for(i=0;i<(m+n);i++)
+    int i,j,d[31],l;
+    for(i=0;i<m;i++)
     {
-        if(i<m){
-           c[i]=*(p+i);
-        }
-        else{
-            c[i]=*(q+i-m);
-        }
+        d[i]=*(p+i);
     }
-    display(&c, m+n);
+    for(i=m; i<m+n; i++)
+    {
+        d[i]=*(q+i-m);
+    }
+    l=m+n;
+    sort(&d, l);
+    l=r(&d, l);
+    display(&d, l);
 }
 void intersection(int *p, int *q, int m, int n)
 {
-    int i,j,c[31],l=0;
+    int i,j,d[31],l=0;
     for(i=0;i<m;i++)
     {
         for(j=0;j<n;j++)
         {
             if(*(p+i)==*(q+j))
             {
-                c[l]=*(p+i);
-                l+=1;
+                d[l]=*(p+i);
+                l++;
             }
         }
     }
-    display(&c, l);
+    sort(&d, l);
+    l=r(&d, l);
+    display(&d, l);
 }
 void difference(int *p, int *q, int m, int n)
 {
-    int i,j,c[31],l=0;
+    int i, j, d[31], l=0, o=0, e[31];
     for(i=0;i<m;i++)
     {
-        if(*(p+i)!=*(q+i))
+        for(j=0;j<n;j++)
+        {
+            if(*(p+i)==*(q+j))
             {
-                c[l]=*(p+i);
+                d[l]=*(p+i);
                 l++;
+            }
+        }
+    }
+    for(i=0;i<m;i++)
+    {
+        for(j=0;j<l;j++)
+        {
+            if(*(p+i)==d[i])
+            {
+                j++;
             }
             else
             {
-                i++;
+                e[o]=*(p+i);
+                o++;
             }
+
+        }
     }
-    display(&c, l);
-
+    display(&e, o);
 }
+void symmetric(int *p, int *q, int m, int n)
+{
+    int i,j,d[31],l=0,c[31],y=0,f[31],v;
+    for(i=0;i<m;i++)
+    {
+        d[i]=*(p+i);
+    }
+    for(i=m; i<m+n; i++)
+    {
+        d[i]=*(q+i-m);
+    }
+    v=m+n;
+    sort(&d, v);
+    v=r(&d, v);
+    display(&d, v);
+    for(i=0;i<m;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            if(*(p+i)==*(q+j))
+            {
+                c[y]=*(p+i);
+                y++;
+            }
+        }
+    }
+    sort(&c, y);
+    y=r(&c, y);
+    display(&c, y);
+    for(i=0; i<v; i++)
+    {
+        for(j=0;j<y;j++)
+        {
+            if(d[i]!=c[j])
+            {
+                f[l]=d[i];
+                l++;
+            }
 
-
+        }
+    }
+    sort(&f, l);
+    l=r(&f, l);
+    display(&f, l);
+}
